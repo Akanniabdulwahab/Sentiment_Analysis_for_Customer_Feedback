@@ -18,7 +18,7 @@
 
 ## AliExpress Review Sentiment Classifier Live Demo
 
-[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)]([https://your-app-name.streamlit.app](https://sentimentanalysisforcustomerfeedback-lumppzfgtqszdmt2fngwhd.streamlit.app/))
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://sentimentanalysisforcustomerfeedback-lumppzfgtqszdmt2fngwhd.streamlit.app/)
 
 A sentiment analysis tool that classifies AliExpress electronics reviews as positive, negative, or neutral, with support for single reviews and batch (CSV uploads).
 
