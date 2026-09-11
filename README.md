@@ -1,4 +1,4 @@
-# AliExpress Review Sentiment Classifier 🔗 **[Live Demo]([https://your-app-name.streamlit.app](https://sentimentanalysisforcustomerfeedback-lumppzfgtqszdmt2fngwhd.streamlit.app/))** A sentiment analysis tool for AliExpress electronics reviews.
+# AliExpress Review Sentiment Classifier 🔗 **[Live Demo](https://sentimentanalysisforcustomerfeedback-lumppzfgtqszdmt2fngwhd.streamlit.app/)** A sentiment analysis tool for AliExpress electronics reviews.
 
 # Sentiment_Analysis_for_Customer_Feedback
 
