@@ -5,7 +5,7 @@
 
 ## Table of Cotents
 
-- [AliExpress Review Sentiment Classifier Live Demo](###AliExpress-Review-Sentiment-Classifier-Live-Demo)
+- [AliExpress Review Sentiment Classifier Live Demo](#AliExpress-Review-Sentiment-Classifier-Live-Demo)
 - [Business Introduction](#Business-Introduction)
 - [Business Problem](#Business-Problem)
 - [Aim of Project](#Aim-of-Project)
