@@ -18,9 +18,9 @@
 
 ## AliExpress Review Sentiment Classifier Live Demo
 
-[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://your-app-name.streamlit.app)
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)]([https://your-app-name.streamlit.app](https://sentimentanalysisforcustomerfeedback-lumppzfgtqszdmt2fngwhd.streamlit.app/))
 
-A sentiment analysis tool that classifies AliExpress electronics reviews as positive, negative, or neutral, with support for single reviews and batch CSV uploads.
+A sentiment analysis tool that classifies AliExpress electronics reviews as positive, negative, or neutral, with support for single reviews and batch (CSV uploads).
 
 ## Business Introduction
 TechTrends E-commerce Solutions is a leading name in the e-commerce industry, Operate as a mid-sized company with a growing customer base. Specializing in a wide range of online product, the company places a strong emphasis on ensuring customer satisfaction. Renowned for its online presence, TechTrends actively engages with its customers, receiving a substantial volume of valuable reviews and feedback across various platforms. They face a challenge of efficiently processing and deriving valuable insight from the influx of customers reviews they receive daily. They want to develop a model to help them effectively classify customers feedback into positive and negative categories.
