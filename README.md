@@ -23,18 +23,18 @@
 A sentiment analysis tool that classifies AliExpress electronics reviews as positive, negative, or neutral, with support for single reviews and batch (CSV uploads).
 
 ## Business Introduction
-AliExpress E-commerce Solutions is a leading name in the e-commerce industry, Operate as a mid-sized company with a growing customer base. Specializing in a wide range of online product, the company places a strong emphasis on ensuring customer satisfaction. Renowned for its online presence, AliExpress actively engages with its customers, receiving a substantial volume of valuable reviews and feedback across various platforms. They face a challenge of efficiently processing and deriving valuable insight from the influx of customers reviews they receive daily. They want to develop a model to help them effectively classify customers feedback into positive neutrel and negative categories.
+AliExpress E-commerce Solutions is a leading name in the e-commerce industry, Operate as a mid-sized company with a growing customer base. Specializing in a wide range of online product, the company places a strong emphasis on ensuring customer satisfaction. Renowned for its online presence, AliExpress actively engages with its customers, receiving a substantial volume of valuable reviews and feedback across various platforms. They face a challenge of efficiently processing and deriving valuable insight from the influx of customers reviews they receive daily. They want to develop a model to help them effectively classify customers feedback into positive neutral and negative categories.
 
-AliExpress E-commerce Solutions boast an impressive online presence, they have garnered over 500,000 loyal customers. This trust has translated into an astounding 98% customer satisfaction rate, and they continue to receive an average of 10,000 positive revies and feedback each month across various platforms. These statistics not only reflect their unwavering dedication to providing quality service but also underscore their position as a market leader in the e-commerce sector.
+AliExpress E-commerce Solutions boast an impressive online presence, they have garnered over 150 million of loyal customers worldwide. This trust has translated into an astounding 98% customer satisfaction rate, and they continue to receive millions of positive revies and feedback each month across on various platforms. These statistics not only reflect their unwavering dedication to providing quality service but also underscore their position as a market leader in the e-commerce sector.
 
 ## Business Problem
 AliExpress E-commerce Solutions, although a thriving player in the e-commerce sector, faces the challenge of efficiently processing and deriving valuable insights from substantial influx of customer feedback and reviews it receives daily. The company’s overarching goal is to enhance customer satisfaction and continually refine its product and service offerings. To achieve this, AliExpress E-commerce Solutions seeks to address the following specific business problem.
 
 a.	Managing feedback overload: The company struggles with managing the sheer volume of customer feedback effectively. The influx of reviews from its extensive customer base is overwhelming and requires a streamlined approach to handle efficiently.
 
-b.	Improving sentiment classification: TechTrends aims to enhance the accuracy of sentiment classification for feedback. Currently, the categorization of feedback into positive, negative, or neutral sentiments is not as precise as desired. Improving classification process is crucial for extracting more meaning insights.
+b.	Improving sentiment classification: The aims to enhance the accuracy of sentiment classification for feedback. Currently, the categorization of feedback into positive, negative, or neutral sentiments is not as precise as desired. Improving classification process is crucial for extracting more meaning insights.
 
-c.	Resource allocation optimization: Manual analysis of customer feedback is resource-intensive and time-consuming. TechTrends E-commerce Solutions seeks to reduce these manual efforts through automation to allocate resources more effectively and efficiently.
+c.	Resource allocation optimization: Manual analysis of customer feedback is resource-intensive and time-consuming. They seeks to reduce these manual efforts through automation to allocate resources more effectively and efficiently.
 
 ## Aim of Project
 My objectives can be summarized into key areas. Firstly, I aim to develop a sentiment analysis model using NLP techniques, allowing me to effectively classify customer feedback into positive and negative categories.
@@ -59,7 +59,7 @@ d.	Scikit-learn: For machine learning
 ## Data Collection
 a.	Data Loading: Loaded in the train and test dataset using the pd.read_csv() format. I also ran data cleaning on the two datasets to see if my dataset was in the right shape for analysis. 
 
-b.	Mapping: I mapped the labels (__label__2, __label__1) into positives and negative respectively.
+b.	Mapping: I mapped the rating 1, 2, 3, 4, and 5 into negative(1 & 2), neutral (3), and positives(4 & 5) respectively.
 
 ## Text Processing
 a.  Tokenization: Created a sentence and performed tokenization on it. Tokenization is the process of splitting sentence into list of words.
@@ -92,13 +92,19 @@ For the MultinimialNB on tf-idf and bow, I imported MultinomialNB from sklearn.n
 ## Model Evaluation
 I evaluated all the four models using the classification report. The accuracy of each model is:
 
-a.	Vader on text – 72%
+a.	Vader on text – 54%
 
-b.	Vader on text_without_stopwords - 68%
+b.	Vader on text_without_stopwords - 55%
 
-c.	MultinimialNB on tf-idf – 84%
+c.	MultinimialNB on tf-idf – 94%
 
-d.	MultinimialNB on bow (Bag of Words) - 85%
+d.	MultinimialNB on bow (Bag of Words) - 91%
+
+## Limitations:
+a.	Neutral-class scarcity: only 957 of 36,706 reviews (2.6%) were naturally neutral before oversampling; oversampling duplicates existing neutral examples rather than adding new information, so neutral-class performance may not generalize as well as the test-set numbers suggest.
+
+b.	Rating-based labels are a proxy, not ground truth: mapping star ratings to sentiment assumes a 3-star review is always “neutral” in text, which is not always true — a customer can leave harsh text but a middling star rating, or vice versa.
+
 
 ## Conclusion:
 In conclusion, the best performing model is MultinimialNB on Bag of Words (BOW).
