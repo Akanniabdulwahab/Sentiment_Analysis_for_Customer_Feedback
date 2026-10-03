@@ -1,5 +1,4 @@
-
-# Sentiment_Analysis_for_Customer_Feedback
+# E-COMMERCE PRODUCT REVIEW SENTIMENT ANALYZER
 
 ![image](https://github.com/user-attachments/assets/dd4e8314-2587-49e9-a408-9ad6501d4a48)
 
