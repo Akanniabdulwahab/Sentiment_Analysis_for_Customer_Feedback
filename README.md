@@ -21,7 +21,7 @@
 - [Model 1 - VADER (Rule-Based Sentiment)](#Model-1-VADER (Rule-Based Sentiment))
 - [Models 2–4 - Naive Bayes, Logistic Regression & Linear SVM](#Models-2–4-Naive-Bayes,-Logistic-Regression-&-Linear-SVM)
 - [Model Comparison & Results](#Model-Comparison-&-Results)
-- [Hyperparameter Tuning (GridSearchCV Pipeline)](#Hyperparameter-Tuning (GridSearchCV Pipeline))
+- [Hyperparameter Tuning (GridSearchCV Pipeline)](#Hyperparameter-Tuning-(GridSearchCV-Pipeline))
 - [Inference Pipeline](#Inference-Pipeline)
 - [Model Deployment](#Model-Deployment)
 - [Limitations](#Limitations)
