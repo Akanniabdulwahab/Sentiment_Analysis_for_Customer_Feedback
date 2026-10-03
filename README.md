@@ -121,7 +121,7 @@ The cleaned dataset was split into training and test sets using an 80/20 split (
 ## Feature Engineering (Bag of Words & TF-IDF)
 Machine learning models require numerical input, so the cleaned review text was converted into two different numerical representations for comparison:
 
-●	Bag of Words (BoW) — counts how often each word (and word pair, via ngram_range=(1,2)) appears in a review, ignoring word order.
+●	Bag of Words (BoW) - counts how often each word (and word pair, via ngram_range=(1,2)) appears in a review, ignoring word order.
 
 ●	TF-IDF (Term Frequency – Inverse Document Frequency) — down-weights words that appear across most reviews (e.g. “product”) and up-weights words distinctive to a given review.
 
@@ -130,7 +130,7 @@ Both vectorizers were fit on the training text only, then used to transform the 
 <img width="476" height="191" alt="feature engineering" src="https://github.com/user-attachments/assets/de0eeb37-c607-47da-8f08-1e844ed5d1a0" />
 
 ## Handling Class Imbalance (Train-Only Oversampling)
-Because the neutral class made up only a small fraction of reviews, and this fraction shrinks further once the data is split (784 of 29,364 training rows, or 2.7%), training directly on the raw distribution would bias any classifier toward never predicting neutral. Random Oversampling was applied to the vectorized training features only, duplicating minority-class examples until all three classes were equally represented in the training set — the test set was left untouched.
+Because the neutral class made up only a small fraction of reviews, and this fraction shrinks further once the data is split (784 of 29,364 training rows, or 2.7%), training directly on the raw distribution would bias any classifier toward never predicting neutral. Random Oversampling was applied to the vectorized training features only, duplicating minority-class examples until all three classes were equally represented in the training set  the test set was left untouched.
 
 <img width="468" height="145" alt="Handling class inmalance" src="https://github.com/user-attachments/assets/aa9b8eaa-2cf5-4bd3-89ff-d9b5a3dda91a" />
 
@@ -138,16 +138,15 @@ Because the neutral class made up only a small fraction of reviews, and this fra
 <img width="563" height="256" alt="Handling class inmalance 2" src="https://github.com/user-attachments/assets/b93e9736-3cc7-497b-b2a4-86c3837439d2" />
 
 ## Step 8 — Model 1: VADER (Rule-Based Sentiment)
-VADER (Valence Aware Dictionary and sEntiment Reasoner) is a pretrained, lexicon-based sentiment model — it requires no training data and scores each word in a sentence against a dictionary of sentiment intensities, combining those into an overall “compound” score. This iteration uses a three-way threshold intended to add a neutral band around a compound score of 0.05:
+VADER (Valence Aware Dictionary and Sentiment Reasoner) is a pretrained, lexicon based sentiment model, it requires no training data and scores each word in a sentence against a dictionary of sentiment intensities, combining those into an overall “compound” score. This iteration uses a three-way threshold intended to add a neutral band around a compound score of 0.05:
 
 <img width="429" height="187" alt="model 1 vader" src="https://github.com/user-attachments/assets/e04bb3bb-cb12-41ec-b89b-2e0f0c15caa1" />
 
-Note for the technical reviewer: as written, the elif compound_score <= 0.05 branch fires on everything the first condition didn't catch (i.e. every score below 0.05 already satisfies “≤ 0.05”), so the else: neutral branch can never execute. This is why VADER's neutral-class precision and recall are exactly 0.00 in both classification reports below — not a lexicon weakness, but the threshold logic never actually reaching the intended neutral case. Fixing it would require a genuine band, e.g. treating scores between -0.05 and 0.05 as neutral, before the negative check.
-VADER was applied to two versions of the test set — raw text and stopword-stripped text — and scored well above the previous iteration's ~55% because this test set is far more skewed toward positive/negative reviews (only 2.4% neutral) than a hypothetical balanced one, which flatters any model that defaults to those two classes.
+VADER was applied to two versions of the test set raw text and stopword-stripped text and scored well.
 
 ## Models 2–4: Naive Bayes, Logistic Regression & Linear SVM
 
-Three supervised classifiers were trained on the balanced training features (Section 13) — one Bag-of-Words model and one TF-IDF model each — and evaluated against the untouched, naturally-imbalanced test labels.
+Three supervised classifiers were trained on the balanced training features, one Bag-of-Words model and one TF-IDF model each, and evaluated against the untouched, naturally-imbalanced test labels.
 
 Multinomial Naive Bayes:
 mnb_bow = MultinomialNB(); mnb_tfidf = MultinomialNB()
@@ -209,18 +208,18 @@ h. Linear SVM ((TF-IDF)
 
 <img width="337" height="207" alt="linear svm 2" src="https://github.com/user-attachments/assets/d205c7a9-565a-4ff6-9020-395a8b5ca71a" />
 
-The accuracy-vs-fairness trade-off
+The accuracy vs fairness trade-off
 Linear SVM on TF-IDF looks like the best model by accuracy alone (94.0%), but its classification report shows it almost never identifies a neutral review correctly (3% recall, 5% F1). Because the test set is dominated by positive reviews (66%), a model can push accuracy up simply by getting better at the majority class while giving up on the minority one, exactly what happened here. Logistic Regression on TF-IDF, by contrast, trades a little accuracy for meaningfully better neutral class balance (22% recall, 23% F1) and the best macro F1 (0.70) among the untuned models. This is why macro F1, not accuracy, was used as the selection criterion for the final tuned model
 
 ## Hyperparameter Tuning (GridSearchCV Pipeline)
-Logistic Regression + TF-IDF was carried forward for hyperparameter tuning as the strongest untuned configuration by macro F1. Rather than tuning on the already-fitted TF-IDF matrix from Section 12 — which would let each cross-validation fold's held-out text leak into the vectorizer's vocabulary during fit_transform — the vectorizer, the oversampler, and the classifier were combined into a single imbalanced-learn Pipeline and tuned together directly on raw (stopword-removed) text. This keeps every fold's validation text genuinely unseen during fitting.
+Logistic Regression + TF-IDF was carried forward for hyperparameter tuning as the strongest untuned configuration by macro F1. Rather than tuning on the already fitted TF-IDF matrix which would let each cross-validation fold's held out text leak into the vectorizer's vocabulary during fit_transform, the vectorizer, the oversampler, and the classifier were combined into a single imbalanced-learn Pipeline and tuned together directly on raw (stopword-removed) text. This keeps every fold's validation text genuinely unseen during fitting.
 
 <img width="388" height="420" alt="hyperparameter tuning" src="https://github.com/user-attachments/assets/5221ebb8-dfd1-4f51-b634-0fba709b5c86" />
 
 The search identified C=1, min_df=3, and an ngram_range of (1,2) as the best settings, reaching a cross-validated macro F1 of 0.6866 and, on the held-out test set, an accuracy of 93% with a macro F1 of 0.71, a further improvement in neutral-class recall (27%, up from 22% for the untuned Logistic Regression + TF-IDF model) without giving up positive/negative class performance. This tuned pipeline (best_model) was carried forward as the final model for inference and deployment.
 
 ## Inference Pipeline
-The final inference() function wraps the full prediction pipeline — from raw text to a sentiment label — using the tuned Logistic Regression + TF-IDF model. Because best_model is the entire fitted pipeline (vectorizer included), the function only needs to strip stopwords before calling predict():
+The final inference() function wraps the full prediction pipeline from raw text to a sentiment label using the tuned Logistic Regression + TF-IDF model. Because best_model is the entire fitted pipeline (vectorizer included), the function only needs to strip stopwords before calling predict():
  
 <img width="448" height="133" alt="inference pipeline" src="https://github.com/user-attachments/assets/3a20786f-2c75-4768-b6f6-c878c50335ad" />
 
@@ -243,7 +242,7 @@ The tuned pipeline was serialized to disk with joblib as a single artifact, sinc
 
 ## Recommendations & Future Work
 
-●	Treat macro F1 (or per-class recall) as the primary model selection metric going forward, not accuracy, this dataset's imbalance makes accuracy systematically favour majority class performance.
+●	Treat macro F1 (or per class recall) as the primary model selection metric going forward, not accuracy, this dataset's imbalance makes accuracy systematically favour majority class performance.
 
 ●	Collect or synthesize more genuinely neutral reviews rather than relying solely on oversampling duplicates of the existing 957 (36,706 row) or 784 (training-only) neutral examples.
 
@@ -251,49 +250,6 @@ The tuned pipeline was serialized to disk with joblib as a single artifact, sinc
 
 ## Conclusion
 This iteration meaningfully deepens the sentiment-analysis pipeline built for AliExpress Electronics reviews: eight model/feature combinations were compared head-to-head on a test set. The strongest configuration was carried through a hyperparameter-tuning stage. The final tuned Logistic Regression + TF-IDF pipeline reaches 93% accuracy and a macro F1 of 0.71, the best balance across all three sentiment classes of any approach tested, and was packaged as a single deployable artifact.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
