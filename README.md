@@ -245,8 +245,6 @@ The tuned pipeline was serialized to disk with joblib as a single artifact, sinc
 
 ●	Collect or synthesize more genuinely neutral reviews rather than relying solely on oversampling duplicates of the existing 957 (36,706 row) or 784 (training-only) neutral examples.
 
-●	Run negation focused inference spot-checks before sign-off.
-
 ## Conclusion
 This iteration meaningfully deepens the sentiment-analysis pipeline built for AliExpress Electronics reviews: eight model/feature combinations were compared head-to-head on a test set. The strongest configuration was carried through a hyperparameter-tuning stage. The final tuned Logistic Regression + TF-IDF pipeline reaches 93% accuracy and a macro F1 of 0.71, the best balance across all three sentiment classes of any approach tested, and was packaged as a single deployable artifact.
 
